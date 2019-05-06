@@ -64,7 +64,6 @@ function compileGraphQl(saveSchema,folder='./schema/',resolver_dir="", plugin=[]
 
 	
 	for (var i=0; i<items.length; i++) {
-			console.log(folder + items[i]);
 			if(!is_dir(folder + items[i]) || folder + items[i] != folder + resolver_dir) {
 				let data = fs.readFileSync(folder + items[i], 'utf8')
 			
