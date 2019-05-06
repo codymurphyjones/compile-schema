@@ -37,3 +37,22 @@ CreateResolvers(resolver_dir="", folder="./schema/")
 ```
 
 Generates the resolvers object required by makeExecutableSchema
+
+
+```javascript
+import { graphqlExpress } from 'apollo-server-express';
+import compileSchema from './compile-schema';
+
+let schemaFolder = "./schema/";
+let resolverFolder = "resolvers";
+const schema = compileSchema(schemaFolder,resolverFolder);
+
+
+graphqlExpress({
+		schema,
+		// This option turns on tracing
+		tracing: false,
+		cacheControl: true 
+	}));
+	
+```
