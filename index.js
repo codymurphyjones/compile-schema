@@ -1,4 +1,4 @@
-import { makeExecutableSchema } from 'graphql-tools';
+const { makeExecutableSchema } = require('graphql-tools');
 
 var fs = require('fs');
 var path = require('path');
@@ -85,7 +85,7 @@ function compileGraphQl(saveSchema,folder='./schema/',resolver_dir="", plugin=[]
 	return { typeDefs: schema };
 }
  
-export default function compileschema(folder='./schema/',resolver_dir="",saveSchema=true, plugin=[],main=makeExecutableSchema) {
+module.exports = function compileschema(folder='./schema/',resolver_dir="",saveSchema=true, plugin=[],main=makeExecutableSchema) {
 	let resolvers = CreateResolvers(resolver_dir, folder);
 	let { typeDefs } = compileGraphQl(saveSchema, folder, resolver_dir);
 
