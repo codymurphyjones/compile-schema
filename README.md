@@ -58,8 +58,8 @@ graphqlExpress({
 ```
 
 `Schema Folder Structure`
-![alt text](https://imgur.com/saCBOTW "Schema Folder Structure")
+![alt text](https://imgur.com/saCBOTW.png "Schema Folder Structure")
 
 
 `Resolvers Folder Structure`
-![alt text](https://imgur.com/Plt4kBT "Resolvers Folder Structure")
+![alt text](https://imgur.com/Plt4kBT.png "Resolvers Folder Structure")
