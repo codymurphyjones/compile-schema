@@ -1,6 +1,6 @@
 {
   "name": "compile-schema",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A library to compile schema defined in a specific folder.  Allows resolver and schema splitting, designed for implementation with Apollo.",
   "main": "index.js",
   "author": "Cody Jones",
