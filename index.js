@@ -1,10 +1,8 @@
-const { makeExecutableSchema } = require('graphql-tools');
 
 var fs = require('fs');
 var path = require('path');
 const {getFilesAsJson} = require('dynamic-file-require');
-
-
+var currentPath = process.cwd();
 
 function CreateResolvers(resolver_dir="", folder="./schema/") {
 	let resolverDir = folder + resolver_dir;
@@ -47,7 +45,8 @@ function is_dir(path) {
 }
 
 function compileGraphQl(saveSchema,folder='./schema/',resolver_dir="", plugin=[]) {
-	
+	let folder_dir = path.resolve(currentPath,folder);
+	folder = folder_dir  + "\\";
 	let schema = "";
 	var myRe = /d(b+)d/g;
 
@@ -83,8 +82,18 @@ function compileGraphQl(saveSchema,folder='./schema/',resolver_dir="", plugin=[]
 	
 	return { typeDefs: schema };
 }
+
+var exports = module.exports = {};
+
+exports.compileSchema = function(folder='./schema/',resolver_dir="",saveSchema=true, plugin=[]) {
+	let resolvers = CreateResolvers(resolver_dir, folder);
+	let { typeDefs } = compileGraphQl(saveSchema, folder, resolver_dir);
+
+	
+	return {resolvers, typeDefs};
+}
  
-module.exports = function compileschema(folder='./schema/',resolver_dir="",saveSchema=true, plugin=[],main=makeExecutableSchema) {
+exports.compileExecutableSchema = function (folder='./schema/',resolver_dir="",exec=function() {},saveSchema=true, plugin=[]) {
 	let resolvers = CreateResolvers(resolver_dir, folder);
 	let { typeDefs } = compileGraphQl(saveSchema, folder, resolver_dir);
 

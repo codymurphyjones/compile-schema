@@ -4,9 +4,9 @@
 
 
 
-Default Export
+Function Exports
 ```javascript
-compileschema(folder='./schema/',resolver_dir="",saveSchema=true, plugin=[],main=makeExecutableSchema)
+compileSchema(folder='./schema/',resolver_dir="",saveSchema=true, plugin=[])
 ```
 
 `folder`
@@ -20,11 +20,29 @@ Determines whether or not the system compiles the GraphQL files into a single fi
 
 `plugin`
 Experimental Functionality: Supports any function that accepts a single string parameters and returns a string parameter.
+  
+```javascript
+compileExecutableSchema(folder='./schema/',resolver_dir="",exec=function() {},saveSchema=true, plugin=[]
+```
 
-`main`
-Experimental Functionality: this is the function used the convert into an executable schema.  
+`folder`
+The folder that your schema files are primarily located in.  GraphQL files will be stored in this folder.
 
+`resolver_dir`
+The folder that your .js resolvers are located in.  Default is in the schema folder with the GraphQL files.
 
+`exec`
+Wrap your `{resolvers, typeDefs}` inside of a function before exporting the result.
+
+`saveSchema`
+Determines whether or not the system compiles the GraphQL files into a single file.  `schema.graphql`
+
+`plugin`
+Experimental Functionality: Supports any function that accepts a single string parameters and returns a string parameter.
+  
+
+  
+##### Internal functions
 ```javascript
 compileGraphQl(saveSchema,folder='./schema/',resolver_dir="", plugin=[])
 ```
@@ -43,17 +61,29 @@ Generates the resolvers object required by makeExecutableSchema
 import { graphqlExpress } from 'apollo-server-express';
 import compileSchema from './compile-schema';
 
-let schemaFolder = "./schema/";
+//I can't seem to figure out how to make this module relative to the file that called it, its just the process project folder
+let schemaFolder = "./src/schema/";
 let resolverFolder = "resolvers";
-const schema = compileSchema(schemaFolder,resolverFolder);
+const { ApolloServer, gql } = require('apollo-server-express');
+const { typeDefs, resolvers } = compileSchema(schemaFolder,resolverFolder);
 
 
-graphqlExpress({
-		schema,
-		// This option turns on tracing
-		tracing: false,
-		cacheControl: true 
-	}));
+const graphqlServer = new ApolloServer({
+  // These will be defined for both new or existing servers
+  typeDefs,
+  resolvers,
+ playground: {
+  settings: {
+    'editor.theme': 'light',
+  },
+  tabs: [
+    {
+      endpoint: "graphql",
+      query: "query {",
+    },
+  ],
+}
+});
 	
 ```
 
