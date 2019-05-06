@@ -4,5 +4,13 @@
   "description": "A library to compile schema defined in a specific folder.  Allows resolver and schema splitting, designed for implementation with Apollo.",
   "main": "index.js",
   "author": "Cody Jones",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codymurphyjones/compile-schema.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codymurphyjones/compile-schema/issues"
+  },
+  "homepage": "https://github.com/codymurphyjones/compile-schema#readme"
 }
